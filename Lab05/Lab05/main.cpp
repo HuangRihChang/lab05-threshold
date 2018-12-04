@@ -1,5 +1,4 @@
 ﻿#include "included.h"
-#include "Integral.h"
 #include "Threshold.h"
 
 int main(int argc, char *argv[]) {
@@ -11,17 +10,12 @@ int main(int argc, char *argv[]) {
 	int _lowThreshold = 80;
 	int _highThreshold = 150;
 
-	string filePath = "./images/debug.jpg";
+	string filePath = "./images/cafe.jpg";
 	string dstname;
 
 	//đọc ảnh lên
 	srcImg = imread(filePath, CV_LOAD_IMAGE_UNCHANGED);
-
-
-	Integral *test;
-	test = new Integral(1);
-	test->fit(srcImg);
-	cout << test->compute(5, 5, Size(3, 3)) << endl;
+	cout << "READ OK";
 
 	switch (type)
 	{
@@ -37,7 +31,7 @@ int main(int argc, char *argv[]) {
 	{
 		AverageLocalThreshold* thresholder;
 		thresholder = new AverageLocalThreshold();
-		Size winsize = Size(5, 5);
+		Size winsize = Size(9, 9);
 		thresholder->Apply(srcImg, desImg, winsize);
 		dstname = "AverageLocalThreshold";
 		delete(thresholder);
@@ -46,18 +40,27 @@ int main(int argc, char *argv[]) {
 	{
 		MedianLocalThreshold* thresholder;
 		thresholder = new MedianLocalThreshold();
-		Size winsize = Size(5, 5);
+		Size winsize = Size(9, 9);
 		thresholder->Apply(srcImg, desImg, winsize);
 		dstname = "MedianLocalThreshold";
+		delete(thresholder);
+	}break;
+	case 3:
+	{
+		SauvolaLocalThreshold* thresholder;
+		thresholder = new SauvolaLocalThreshold(0.2, 128);
+		Size winsize = Size(5, 5);
+		thresholder->Apply(srcImg, desImg, winsize);
+		dstname = "SauvolaLocalThreshold";
 		delete(thresholder);
 	}break;
 
 	default:
 		break;
 	}
-/*
+
 	imshow("SrcImage", srcImg);
-	imshow(dstname, desImg);*/
+	imshow(dstname, desImg);
 	waitKey(0);
 	return 1;
 }

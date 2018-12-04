@@ -49,6 +49,7 @@ public:
 
 
 	AverageLocalThreshold();
+	AverageLocalThreshold(int C);
 	~AverageLocalThreshold();
 };
 
@@ -73,6 +74,7 @@ public:
 
 
 	MedianLocalThreshold();
+	MedianLocalThreshold(int C);
 	~MedianLocalThreshold();
 };
 
@@ -98,5 +100,6 @@ public:
 
 
 	SauvolaLocalThreshold();
+	SauvolaLocalThreshold(double k, int r);
 	~SauvolaLocalThreshold();
 };
