@@ -35,7 +35,7 @@ int StaticThreshold::Apply(const Mat& srcImage, Mat &dstImage)
 		uchar *pDst_row = pDst; //pointer đầu dòng thứ y
 		uchar *pData_row = pData;
 		for (int x = 0; x < width; x++, pData_row += 1, pDst_row += 1)
-			*pDst_row = (((_lowThreshold > *pData_row) && (*pData_row < _highThreshold)) ? 0 : 255);
+			*pDst_row = (((_lowThreshold > *pData_row) && (*pData_row < _highThreshold)) ? 255 : 0);
 	}
 	return true;
 }
@@ -77,7 +77,7 @@ int AverageLocalThreshold::Apply(const Mat& srcImage, Mat &dstImage, Size winSiz
 		for (int x = 0; x < width; x++, pdata_row += 1, pdst_row += 1)
 		{
 			uchar mean = integral_->compute(y, x, winSize)/(winSize.height*winSize.width);
-			*pdst_row = (*pdata_row > (mean - _C)) ? 0 : 255;
+			*pdst_row = (*pdata_row > (mean - _C)) ? 255 : 0;
 		}
 	}
 	return true;
@@ -115,7 +115,7 @@ int MedianLocalThreshold::Apply(const Mat& srcImage, Mat &dstImage, Size winSize
 		for (int x = 0; x < width; x++, pdata_row += 1, pdst_row += 1)
 		{
 			uchar* pWin = pdata_row; //pointer tại vị trí y,x
-			*pdst_row = ((int)*pdata_row >((int)*pdst_row - (int)_C)) ? 0 : 255;
+			*pdst_row = ((int)*pdata_row >((int)*pdst_row - (int)_C)) ? 255 : 0;
 		}
 	}
 	return true;
@@ -161,7 +161,7 @@ int SauvolaLocalThreshold::Apply(const Mat& srcImage, Mat &dstImage, Size winSiz
 			uchar mean = integral_mean->compute(y, x, winSize) / n;
 			uchar std = (1 / sqrt(n - 1))*sqrt(integral_std->compute(y, x, winSize) - n*pow(mean, 2.0));
 			uchar T = mean*(1 + _k*(std / (_r - 1)));
-			*pdst_row = (*pdata_row > T) ? 0 : 255;
+			*pdst_row = (*pdata_row > T) ? 255 : 0;
 		}
 	}
 	return true;

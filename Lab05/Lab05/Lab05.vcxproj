@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Integral.cpp" />
+    <ClCompile Include="Kmeans.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Threshold.cpp" />
   </ItemGroup>

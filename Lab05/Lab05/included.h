@@ -6,6 +6,9 @@
 #include <string.h>
 #include <cstdio>
 #include <ctime>
+#include <list>
+
+#define CONVERGE 0.001
 
 using namespace cv;
 using namespace std;

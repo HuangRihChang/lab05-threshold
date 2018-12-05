@@ -18,6 +18,20 @@ public:
 	int Apply(const Mat& srcImage, Mat &dstImage);
 
 	Kmean();
+	Kmean(int k);
 	~Kmean();
 };
 
+struct clusterPoint
+{
+	int _y;
+	int _x;
+	uchar _value;
+
+	clusterPoint(int y, int x, uchar value)
+	{
+		_y = y;
+		_x = x;
+		_value = value;
+	}
+};

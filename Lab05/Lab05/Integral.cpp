@@ -30,10 +30,7 @@ bool Integral::fit(const Mat srcImg)
 			this->integralImg.at<int>(y, x) = pow(pdata_row[0], (double)exp) + this->integralImg.at<int>(y - 1, x) + SUM_;
 			SUM_ += pow(pdata_row[0], (double)exp);
 		}
-	}/*
-	cout << grayImg << endl;
-	cout << "==================================" << endl;
-	cout << this->integralImg << endl;*/
+	}
 }
 
 
