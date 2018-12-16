@@ -26,12 +26,20 @@ int Kmean::Apply(const Mat& srcImage, Mat &dstImage)
 	vector<int> old_means;
 	vector<vector<clusterPoint>> clusters(_numClusters);
 
-	/*compute distances to means*/
 	float E = 1;
 
 	while (E >= CONVERGE)
 	{
 		uchar *pData = grayImg.data;
+		
+		//after a loop we clean all the point in cluster to save memories
+		//we mainpoint is after some loop enought to converge, the loop function will stop 
+		//and we not clean the last clusters
+		clusters.empty();
+
+		//for every pixel in image we will compute distance to every mean represented to clusters
+		//and then for a pixel, it will join the cluster have the minimum distance 
+		//from that pixel to cluster's mean
 		for (int y = 0; y < height; y++, pData += WdithStep)
 		{
 			uchar *pdata_row = pData;
@@ -39,31 +47,39 @@ int Kmean::Apply(const Mat& srcImage, Mat &dstImage)
 			{
 				vector<int> distances;
 				distances.empty();
-
+				//compute distances from a pixel to every mean
 				for (int i = 0; i < _numClusters; i++)
 					distances.push_back(abs(*pdata_row - means[i]));
 
+				//find the nearest mean and join that mean
 				int minIndex = min_element(distances.begin(), distances.end()) - distances.begin();
 				clusters[minIndex].push_back(clusterPoint(y, x, *pdata_row));
 			}
 		}
 
+		//we save current means before re-compute means with new clusters
 		old_means = means;
 
+		//it's Abs Error
 		E = 0;
+
+		//after that we re-compute all the mean
 		for (int i = 0; i < _numClusters; i++)
 		{
 			int SUM_ = 0;
 			if (clusters[i].size() > 0)
 			{
+				//re-compute means for all the mean with new cluster
 				for (int j = 0; j < clusters[i].size(); j++)
 					SUM_ += (int)clusters[i][j]._value;
 				means[i] = (int)(SUM_ / clusters[i].size());
 			}
+
+			//compute the error
 			E += abs(means[i] - old_means[i]);
 		}
-	}
-	cout << "clustering OK" << endl;
+	} //we repeate until Error change very small
+	//it's mean all the mean have change not thing
 
 	dstImage = Mat(height, width, CV_8UC1);//Ảnh xám
 

@@ -8,7 +8,7 @@
 #include <ctime>
 #include <list>
 
-#define CONVERGE 0.001
+#define CONVERGE 0.0001
 
 using namespace cv;
 using namespace std;

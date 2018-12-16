@@ -1,0 +1,2 @@
+..\Lab05.exe mean .\images\blood.jpg 51 2
+PAUSE

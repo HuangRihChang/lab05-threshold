@@ -35,7 +35,7 @@ int StaticThreshold::Apply(const Mat& srcImage, Mat &dstImage)
 		uchar *pDst_row = pDst; //pointer đầu dòng thứ y
 		uchar *pData_row = pData;
 		for (int x = 0; x < width; x++, pData_row += 1, pDst_row += 1)
-			*pDst_row = (((_lowThreshold > *pData_row) && (*pData_row < _highThreshold)) ? 255 : 0);
+			*pDst_row = ((( *pData_row > _lowThreshold) && (*pData_row < _highThreshold)) ? 255 : 0);
 	}
 	return true;
 }
